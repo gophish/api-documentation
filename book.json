@@ -12,7 +12,8 @@
                     "lang": "go",
                     "name": "Go"
                 }
-            ]
+            ],
+            "theme": "dark"
         }
     }
 }
