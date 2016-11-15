@@ -6,4 +6,5 @@
 * Campaigns
 * Templates
 * Groups
+* Sending Profiles
 
