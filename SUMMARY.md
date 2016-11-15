@@ -7,4 +7,5 @@
 * Templates
 * Groups
 * Sending Profiles
+* Pages
 
