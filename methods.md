@@ -1,6 +1,6 @@
 # Defining Methods
 
-Methods allow you to smoothly display code examples in different languages.
+Methods allow you to smoothly show code examples in different languages.
 
 {% method %}
 ## My first method
