@@ -11,7 +11,7 @@ All API requests require the use of a generated API key. You can find your API k
 When making requests, simply append the `api_key=[API_KEY]` as a GET parameter to authorize yourself to the API.
 
 {% sample lang="http" %}
-```
+```http
 GET /api/campaigns/?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
