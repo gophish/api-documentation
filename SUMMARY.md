@@ -8,4 +8,5 @@
 * Groups
 * Sending Profiles
 * Pages
+* Import
 
