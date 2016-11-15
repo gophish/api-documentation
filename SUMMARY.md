@@ -4,4 +4,5 @@
 * [Defining Methods](methods.md)
 * Overview
 * Campaigns
+* Templates
 
