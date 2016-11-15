@@ -5,4 +5,5 @@
 * Overview
 * Campaigns
 * Templates
+* Groups
 
