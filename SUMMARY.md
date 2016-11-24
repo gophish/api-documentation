@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [Defining Methods](methods.md)
-* Settings
+* [Settings](settings/README.md)
 * Sending Profiles
 * Templates
 * Landing Pages
