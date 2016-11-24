@@ -6,4 +6,5 @@
 * Landing Pages
 * Sending Profiles
 * Templates
+* Settings
 
