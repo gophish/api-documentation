@@ -4,4 +4,5 @@
 * [Defining Methods](methods.md)
 * Campaigns
 * Landing Pages
+* Sending Profiles
 
