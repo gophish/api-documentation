@@ -3,8 +3,8 @@
 * [Introduction](README.md)
 * [Defining Methods](methods.md)
 * Settings
-* Campaigns
 * Landing Pages
+* Campaigns
 * Sending Profiles
 * Templates
 
