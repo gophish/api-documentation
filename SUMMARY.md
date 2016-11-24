@@ -5,4 +5,5 @@
 * Campaigns
 * Landing Pages
 * Sending Profiles
+* Templates
 
