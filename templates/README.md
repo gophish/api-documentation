@@ -33,7 +33,7 @@ Templates support sending attachments. Attachments have the following structure:
 ## Get Templates
 {% method %}
 
-Returns an list of templates.
+Returns a list of templates.
 
 {% sample lang="http" %}
 ```http
@@ -61,7 +61,9 @@ GET /api/templates/?api_key=12345678901234567890123456789012
 ## Get Template
 {% method %}
 
-Returns a template given an ID. Returns a 404 error if the specified template isn't found.
+Returns a template given an ID. 
+
+Returns a 404 error if the specified template isn't found.
 
 {% sample lang="http" %}
 ```http
@@ -81,6 +83,36 @@ GET /api/templates/1?api_key=12345678901234567890123456789012
   html : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
   modified_date : "2016-11-21T18:30:11.1477736-06:00",
   attachments : [],
+}
+```
+{% endmethod %}
+
+## Create Template
+{% method %}
+
+Creates a template.
+
+This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
+
+{% sample lang="http" %}
+```http
+GET /api/templates/1?api_key=12345678901234567890123456789012
+```
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `name`      | `int64`  | **Required, Unique**. The template name.|
+| `text` or `html` | string | **Required** The template text or HTML |
+
+```
+{
+  "id" : 1,
+  "name" : "Password Reset Template",
+  "subject" : "{{.FirstName}}, please reset your password.",
+  "text" : "Please reset your password here: {{.URL}}",
+  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+  "attachments" : [],
 }
 ```
 {% endmethod %}
