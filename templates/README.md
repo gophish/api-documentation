@@ -46,13 +46,13 @@ GET /api/templates/?api_key=12345678901234567890123456789012
 ```
 [
   {
-    id : 1,
-    name : "Password Reset Template",
-    subject : "{{.FirstName}}, please reset your password.",
-    text : "Please reset your password here: {{.URL}}",
-    html : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-    modified_date : "2016-11-21T18:30:11.1477736-06:00",
-    attachments : [],
+    "id" : 1,
+    "name" : "Password Reset Template",
+    "subject" : "{{.FirstName}}, please reset your password.",
+    "text" : "Please reset your password here: {{.URL}}",
+    "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+    "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+    "attachments" : [],
   }
 ]
 ```
@@ -76,13 +76,13 @@ GET /api/templates/1?api_key=12345678901234567890123456789012
 
 ```
 {
-  id : 1,
-  name : "Password Reset Template",
-  subject : "{{.FirstName}}, please reset your password.",
-  text : "Please reset your password here: {{.URL}}",
-  html : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  modified_date : "2016-11-21T18:30:11.1477736-06:00",
-  attachments : [],
+  "id" : 1,
+  "name" : "Password Reset Template",
+  "subject" : "{{.FirstName}}, please reset your password.",
+  "text" : "Please reset your password here: {{.URL}}",
+  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+  "attachments" : [],
 }
 ```
 {% endmethod %}
@@ -96,7 +96,7 @@ This method expects the template to be provided in JSON format. You must provide
 
 {% sample lang="http" %}
 ```http
-GET /api/templates/1?api_key=12345678901234567890123456789012
+GET /api/templates/?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
@@ -116,4 +116,60 @@ GET /api/templates/1?api_key=12345678901234567890123456789012
 }
 ```
 {% endmethod %}
+
+## Modify Template
+{% method %}
+
+Modifies an existing template.
+
+This method expects the template to be provided in JSON format. You must provide a full template, not just the fields you want to update.
+
+{% sample lang="http" %}
+```http
+PUT /api/templates/1?api_key=12345678901234567890123456789012
+```
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `name`      | `int64`  | **Required, Unique**. The template name.|
+| `text` or `html` | string | **Required** The template text or HTML |
+
+```
+{
+  "id" : 1,
+  "name" : "Password Reset Template",
+  "subject" : "{{.FirstName}}, please reset your password.",
+  "text" : "Please reset your password here: {{.URL}}",
+  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+  "attachments" : [],
+}
+```
+{% endmethod %}
+
+## DELETE Template
+{% method %}
+
+Deletes a template by ID. 
+
+Returns a 404 error if the specified template isn't found.
+
+{% sample lang="http" %}
+```http
+DELETE /api/templates/1?api_key=12345678901234567890123456789012
+```
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `id`      | `int64`  | **Required**. The template ID      |
+
+```
+{
+  "message": "Template deleted successfully!",
+  "success": true,
+  "data": null
+}
+```
+{% endmethod %}
+
 
