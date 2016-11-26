@@ -20,6 +20,8 @@ Templates have the following structure:
 
 > Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a template.
 
+To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The UI adds this automatically, but it needs to be specified if you're using the API.
+
 Templates support sending attachments. Attachments have the following structure:
 
 ```
