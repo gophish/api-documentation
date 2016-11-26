@@ -181,4 +181,23 @@ DELETE /api/templates/1?api_key=12345678901234567890123456789012
 ```
 {% endmethod %}
 
+## Import Template
+Gophish provides the ability to import an email as a template. This makes it easy to weaponize legitimate emails for your phishing assessments.
 
+This endpoint expects the raw email content. By setting the `convert_links` attribute to `true`, Gophish will automatically change all the links in the email to `{{.URL}}`.
+
+```
+{
+  "content" : "raw email content",
+  "convert_links" : true
+}
+```
+
+### Response
+```
+{
+  "text": "Email text",
+  "html": "Email HTML",
+  "subject": "Email subject"
+}
+```
