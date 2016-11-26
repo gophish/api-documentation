@@ -94,6 +94,8 @@ Creates a template.
 
 This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
 
+This method returns the JSON representation of the template that was created.
+
 {% sample lang="http" %}
 ```http
 GET /api/templates/?api_key=12345678901234567890123456789012
@@ -123,6 +125,8 @@ GET /api/templates/?api_key=12345678901234567890123456789012
 Modifies an existing template.
 
 This method expects the template to be provided in JSON format. You must provide a full template, not just the fields you want to update.
+
+This method returns the JSON representation of the template that was modified.
 
 {% sample lang="http" %}
 ```http
@@ -154,6 +158,8 @@ Deletes a template by ID.
 
 Returns a 404 error if the specified template isn't found.
 
+This method returns a status message indicating the template was deleted successfully.
+
 {% sample lang="http" %}
 ```http
 DELETE /api/templates/1?api_key=12345678901234567890123456789012
@@ -163,6 +169,7 @@ DELETE /api/templates/1?api_key=12345678901234567890123456789012
 | `api_key` | `string` | **Required**. Your Gophish API key |
 | `id`      | `int64`  | **Required**. The template ID      |
 
+### Response
 ```
 {
   "message": "Template deleted successfully!",
