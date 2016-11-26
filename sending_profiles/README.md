@@ -4,40 +4,30 @@ A "Sending Profile" is the SMTP configuration that tells Gophish how to send ema
 
 Sending profiles support authentication and ignoring invalid SSL certificates.
 
-Additionally, templates can contain tracking images so that gophish knows when the user opens the email.
-
-Templates have the following structure:
+Sending Profiles have the following structure:
 
 ```
 {
-  id            : int64
-  name          : string
-  subject       : string
-  text          : string
-  html          : string
-  modified_date : string(datetime)
-  attachments   : list(attachment)
+  id                 : int64
+  name               : string
+  username           : string (optional)
+  password           : string (optional)
+  host               : string
+  interface_type     : string
+  from_address       : string
+  ignore_cert_errors : boolean (default:false)
+  modified_date      : string(datetime)
 }
 ```
 
-Templates support sending attachments. Attachments have the following structure:
-
-```
-  content: string
-  type   : string`
-  name   : string`
-```
-
-> Note: The `content` field in an attachment is expected to be base64 encoded.
-
-## Get Templates
+## Get Sending Profiles
 {% method %}
 
-Returns a list of templates.
+Returns a list of sending profiles.
 
 {% sample lang="http" %}
 ```http
-GET /api/templates/?api_key=12345678901234567890123456789012
+GET /api/smtp/?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
@@ -47,136 +37,143 @@ GET /api/templates/?api_key=12345678901234567890123456789012
 [
   {
     "id" : 1,
-    "name" : "Password Reset Template",
-    "subject" : "{{.FirstName}}, please reset your password.",
-    "text" : "Please reset your password here: {{.URL}}",
-    "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-    "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-    "attachments" : [],
+    "name":"Example Profile",
+    "interface_type":"SMTP",
+    "from_address":"John Doe <john@example.com>",
+    "host":"smtp.example.com:25",
+    "username":"",
+    "password":"",
+    "ignore_cert_errors":true,
+    "modified_date": "2016-11-20T14:47:51.4131367-06:00"
   }
 ]
 ```
 {% endmethod %}
 
-## Get Template
+## Get Sending Profile
 {% method %}
 
-Returns a template given an ID. 
+Returns a sending profile given an ID. 
 
-Returns a 404 error if the specified template isn't found.
+Returns a 404 error if the specified sending profile isn't found.
 
 {% sample lang="http" %}
 ```http
-GET /api/templates/1?api_key=12345678901234567890123456789012
+GET /api/smtp/1?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The template ID      |
+| `id`      | `int64`  | **Required**. The sending profile ID      |
 
 ```
 {
   "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
+  "name":"Example Profile",
+  "interface_type":"SMTP",
+  "from_address":"John Doe <john@example.com>",
+  "host":"smtp.example.com:25",
+  "username":"",
+  "password":"",
+  "ignore_cert_errors":true,
+  "modified_date": "2016-11-20T14:47:51.4131367-06:00"
 }
 ```
 {% endmethod %}
 
-## Create Template
+## Create Sending Profile
 {% method %}
 
-Creates a template.
+Creates a sending profile.
 
-This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
+This method expects the sending profile to be provided in JSON format. You must provide a sending profile `name`, the `from_address` which emails are sent from, and the SMTP relay `host`.
 
-> Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a template.
+Sending Profiles support authentication by setting the `username` and `password`.
 
-To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The UI adds this automatically, but it needs to be specified if you're using the API.
+Additionally, many SMTP server deployments leverage self-signed certificates. To tell Gophish to ignore these invalid certificates, set the `ignore_cert_errors` to `true`.
 
-This method returns the JSON representation of the template that was created.
+This method returns the JSON representation of the sending profile that was created.
 
 {% sample lang="http" %}
 ```http
-GET /api/templates/?api_key=12345678901234567890123456789012
+GET /api/smtp/?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The template name.|
-| `text` or `html` | string | **Required** The template text or HTML |
+| `name`    | `int64`  | **Required, Unique**. The sending profile name.|
+| `from_address` | string | **Required** The address to send emails from |
+| `host`    | string | **Required** The `host:port` of the SMTP relay to send emails through
+
+```
+{
+  "name":"Example Profile",
+  "interface_type":"SMTP",
+  "from_address":"John Doe <john@example.com>",
+  "host":"smtp.example.com:25",
+  "username":"",
+  "password":"",
+  "ignore_cert_errors":true
+}
+```
+{% endmethod %}
+
+## Modify Sending Profile
+{% method %}
+
+Modifies an existing sending profile.
+
+This method expects the sending profile to be provided in JSON format. You must provide a full sending profile, not just the fields you want to update.
+
+This method returns the JSON representation of the sending profile that was modified.
+
+{% sample lang="http" %}
+```http
+PUT /api/smtp/1?api_key=12345678901234567890123456789012
+```
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `name`      | `int64`  | **Required, Unique**. The sending profile name.|
+| `from_address` | string | **Required** The address to send emails from |
+| `host`    | string | **Required** The `host:port` of the SMTP relay to send emails through
 
 ```
 {
   "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
+  "name":"Example Profile",
+  "interface_type":"SMTP",
+  "from_address":"John Doe <john@example.com>",
+  "host":"smtp.example.com:25",
+  "username":"",
+  "password":"",
+  "ignore_cert_errors":true
 }
 ```
 {% endmethod %}
 
-## Modify Template
+## Delete Sending Profile
 {% method %}
 
-Modifies an existing template.
+Deletes a sending profile by ID. 
 
-This method expects the template to be provided in JSON format. You must provide a full template, not just the fields you want to update.
+Returns a 404 error if the specified sending profile isn't found.
 
-This method returns the JSON representation of the template that was modified.
+This method returns a status message indicating the sending profile was deleted successfully.
 
 {% sample lang="http" %}
 ```http
-PUT /api/templates/1?api_key=12345678901234567890123456789012
+DELETE /api/smtp/1?api_key=12345678901234567890123456789012
 ```
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The template name.|
-| `text` or `html` | string | **Required** The template text or HTML |
-
-```
-{
-  "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
-}
-```
-{% endmethod %}
-
-## DELETE Template
-{% method %}
-
-Deletes a template by ID. 
-
-Returns a 404 error if the specified template isn't found.
-
-This method returns a status message indicating the template was deleted successfully.
-
-{% sample lang="http" %}
-```http
-DELETE /api/templates/1?api_key=12345678901234567890123456789012
-```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The template ID      |
+| `api_key` | `string` | **Required**. Your Gophish API key  |
+| `id`      | `int64`  | **Required**. The sending profile ID|
 
 ### Response
 ```
 {
-  "message": "Template deleted successfully!",
+  "message": "SMTP deleted successfully!",
   "success": true,
   "data": null
 }
