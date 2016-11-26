@@ -5,6 +5,6 @@
 * [Settings](settings/README.md)
 * [Sending Profiles](sending_profiles/README.md)
 * [Templates](templates/README.md)
-* Landing Pages
+* [Landing Pages](landing_pages/README.md)
 * Campaigns
 
