@@ -153,7 +153,7 @@ PUT /api/templates/1?api_key=12345678901234567890123456789012
 ```
 {% endmethod %}
 
-## DELETE Template
+## Delete Template
 {% method %}
 
 Deletes a template by ID. 
