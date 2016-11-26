@@ -18,10 +18,6 @@ Templates have the following structure:
 }
 ```
 
-> Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a template.
-
-To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The UI adds this automatically, but it needs to be specified if you're using the API.
-
 Templates support sending attachments. Attachments have the following structure:
 
 ```
@@ -95,6 +91,10 @@ GET /api/templates/1?api_key=12345678901234567890123456789012
 Creates a template.
 
 This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
+
+> Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a template.
+
+To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The UI adds this automatically, but it needs to be specified if you're using the API.
 
 This method returns the JSON representation of the template that was created.
 
