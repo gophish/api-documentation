@@ -6,4 +6,5 @@
 * [Templates](templates/README.md)
 * [Landing Pages](landing_pages/README.md)
 * Campaigns
+* [Groups](groups.md)
 
