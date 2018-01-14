@@ -5,5 +5,5 @@
 * [Sending Profiles](sending_profiles/README.md)
 * [Templates](templates/README.md)
 * [Landing Pages](landing_pages/README.md)
-* Campaigns
+* [Campaigns](campaigns/README.md)
 
