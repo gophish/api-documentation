@@ -6,7 +6,7 @@ Sending profiles support authentication and ignoring invalid SSL certificates.
 
 Sending Profiles have the following structure:
 
-```
+```text
 {
   id                 : int64
   name               : string
@@ -21,19 +21,18 @@ Sending Profiles have the following structure:
 ```
 
 ## Get Sending Profiles
-{% method %}
 
 Returns a list of sending profiles.
 
-{% sample lang="http" %}
 ```http
 GET /api/smtp/?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
 
-```
+```text
 [
   {
     "id" : 1,
@@ -48,25 +47,23 @@ GET /api/smtp/?api_key=12345678901234567890123456789012
   }
 ]
 ```
-{% endmethod %}
 
 ## Get Sending Profile
-{% method %}
 
-Returns a sending profile given an ID. 
+Returns a sending profile given an ID.
 
 Returns a 404 error if the specified sending profile isn't found.
 
-{% sample lang="http" %}
 ```http
 GET /api/smtp/1?api_key=12345678901234567890123456789012
 ```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The sending profile ID      |
 
-```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `id` | `int64` | **Required**. The sending profile ID |
+
+```text
 {
   "id" : 1,
   "name":"Example Profile",
@@ -79,10 +76,8 @@ GET /api/smtp/1?api_key=12345678901234567890123456789012
   "modified_date": "2016-11-20T14:47:51.4131367-06:00"
 }
 ```
-{% endmethod %}
 
 ## Create Sending Profile
-{% method %}
 
 Creates a sending profile.
 
@@ -94,18 +89,18 @@ Additionally, many SMTP server deployments leverage self-signed certificates. To
 
 This method returns the JSON representation of the sending profile that was created.
 
-{% sample lang="http" %}
 ```http
 GET /api/smtp/?api_key=12345678901234567890123456789012
 ```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`    | `int64`  | **Required, Unique**. The sending profile name.|
-| `from_address` | string | **Required** The address to send emails from |
-| `host`    | string | **Required** The `host:port` of the SMTP relay to send emails through
 
-```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `name` | `int64` | **Required, Unique**. The sending profile name. |
+| `from_address` | string | **Required** The address to send emails from |
+| `host` | string | **Required** The `host:port` of the SMTP relay to send emails through |
+
+```text
 {
   "name":"Example Profile",
   "interface_type":"SMTP",
@@ -116,10 +111,8 @@ GET /api/smtp/?api_key=12345678901234567890123456789012
   "ignore_cert_errors":true
 }
 ```
-{% endmethod %}
 
 ## Modify Sending Profile
-{% method %}
 
 Modifies an existing sending profile.
 
@@ -127,18 +120,18 @@ This method expects the sending profile to be provided in JSON format. You must 
 
 This method returns the JSON representation of the sending profile that was modified.
 
-{% sample lang="http" %}
 ```http
 PUT /api/smtp/1?api_key=12345678901234567890123456789012
 ```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The sending profile name.|
-| `from_address` | string | **Required** The address to send emails from |
-| `host`    | string | **Required** The `host:port` of the SMTP relay to send emails through
 
-```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `name` | `int64` | **Required, Unique**. The sending profile name. |
+| `from_address` | string | **Required** The address to send emails from |
+| `host` | string | **Required** The `host:port` of the SMTP relay to send emails through |
+
+```text
 {
   "id" : 1,
   "name":"Example Profile",
@@ -150,34 +143,31 @@ PUT /api/smtp/1?api_key=12345678901234567890123456789012
   "ignore_cert_errors":true
 }
 ```
-{% endmethod %}
 
 ## Delete Sending Profile
-{% method %}
 
-Deletes a sending profile by ID. 
+Deletes a sending profile by ID.
 
 Returns a 404 error if the specified sending profile isn't found.
 
 This method returns a status message indicating the sending profile was deleted successfully.
 
-{% sample lang="http" %}
 ```http
 DELETE /api/smtp/1?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key  |
-| `id`      | `int64`  | **Required**. The sending profile ID|
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `id` | `int64` | **Required**. The sending profile ID |
 
 ### Response
-```
+
+```text
 {
   "message": "SMTP deleted successfully!",
   "success": true,
   "data": null
 }
 ```
-{% endmethod %}
-
 

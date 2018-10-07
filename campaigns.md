@@ -2,7 +2,7 @@
 
 Campaigns have the following structure:
 
-```
+```text
 {
   id                  : int64
   name                : string
@@ -24,7 +24,7 @@ The `template`, `page`, `groups`, and `smtp` objects are all Gophish objects. Th
 
 Gophish keeps track of every event for a campaign in it's `timeline`. Each event has the following format:
 
-```
+```text
 {
   email                : string
   time                 : string(datetime)
@@ -35,7 +35,7 @@ Gophish keeps track of every event for a campaign in it's `timeline`. Each event
 
 In addition to this, campaign results are maintained in the `results` attribute. This has a format similar to the members of a `Group`, in that they have the following structure:
 
-```
+```text
 {
   id                   : int64
   first_name           : string
@@ -50,58 +50,51 @@ In addition to this, campaign results are maintained in the `results` attribute.
 ```
 
 ## Get Campaigns
-{% method %}
 
 Returns a list of campaigns.
 
-{% sample lang="http" %}
 ```http
 GET /api/campaigns/?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
 
-```
+```text
 [
   {
     <TODO>
   }
 ]
 ```
-{% endmethod %}
 
 ## Get Campaign
-{% method %}
 
-Returns a campaign given an ID. 
+Returns a campaign given an ID.
 
 Returns a 404 error if the specified campaign isn't found.
 
-{% sample lang="http" %}
 ```http
 GET /api/campaigns/1?api_key=12345678901234567890123456789012
 ```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The landing page ID  |
 
-```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `id` | `int64` | **Required**. The landing page ID |
+
+```text
 {
   <TODO>
 }
 ```
-{% endmethod %}
 
 ## Create Campaign
-{% method %}
 
 Creates a campaign.
 
 This method expects the campaign to be provided in JSON format. You must provide the following details in a campaign:
-
-<TODO>
 
 #### Scheduling a Campaign
 
@@ -109,17 +102,17 @@ You can schedule a campaign to launch at a later time. To do this, simply put th
 
 Here's an example:
 
-{% sample lang="http" %}
 ```http
 POST /api/campaigns/?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The landing page name.|
+| `name` | `int64` | **Required, Unique**. The landing page name. |
 | `html` | string | **Required** The landing page HTML |
 
-```
+```text
 {
   "name": "Example Page",
   "html": "<html><head></head><body>This is a test page</body></html>",
@@ -128,10 +121,8 @@ POST /api/campaigns/?api_key=12345678901234567890123456789012
   "redirect_url": "http://example.com"
 }
 ```
-{% endmethod %}
 
 ## Modify Landing Page
-{% method %}
 
 Modifies an existing landing page.
 
@@ -139,18 +130,18 @@ This method expects the landing page to be provided in JSON format. You must pro
 
 This method returns the JSON representation of the landing page that was modified.
 
-{% sample lang="http" %}
 ```http
 PUT /api/pages/1?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The landing page ID  |
-| `name`      | `int64`  | **Required, Unique**. The landing page name.|
+| `id` | `int64` | **Required**. The landing page ID |
+| `name` | `int64` | **Required, Unique**. The landing page name. |
 | `html` | string | **Required** The landing page HTML |
 
-```
+```text
 {
   "name": "Example Page",
   "html": "<html><head></head><body>This is a test page</body></html>",
@@ -159,47 +150,35 @@ PUT /api/pages/1?api_key=12345678901234567890123456789012
   "redirect_url": "http://example.com"
 }
 ```
-{% endmethod %}
 
 ## Delete Campaign
-{% method %}
 
-Deletes a campaign by ID. 
+Deletes a campaign by ID.
 
 Returns a 404 error if the specified campaign isn't found.
 
 This method returns a status message indicating the campaign was deleted successfully.
 
-{% sample lang="http" %}
 ```http
 DELETE /api/campaigns/1?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The landing page ID  |
+| `id` | `int64` | **Required**. The landing page ID |
 
 ### Response
-```
+
+```text
 {
   "message": "Campaign deleted successfully!",
   "success": true,
   "data": null
 }
 ```
-{% endmethod %}
 
 ## Get Campaign Summary
 
-<TODO>
-
 ## Complete Campaign
-
-<TODO>
-
-
-
-
-
-
 

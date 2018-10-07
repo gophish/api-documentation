@@ -6,7 +6,7 @@ Additionally, templates can contain tracking images so that gophish knows when t
 
 Templates have the following structure:
 
-```
+```text
 {
   id            : int64
   name          : string
@@ -20,7 +20,7 @@ Templates have the following structure:
 
 Templates support sending attachments. Attachments have the following structure:
 
-```
+```text
   content: string
   type   : string`
   name   : string`
@@ -29,19 +29,18 @@ Templates support sending attachments. Attachments have the following structure:
 > Note: The `content` field in an attachment is expected to be base64 encoded.
 
 ## Get Templates
-{% method %}
 
 Returns a list of templates.
 
-{% sample lang="http" %}
 ```http
 GET /api/templates/?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
 
-```
+```text
 [
   {
     "id" : 1,
@@ -54,25 +53,23 @@ GET /api/templates/?api_key=12345678901234567890123456789012
   }
 ]
 ```
-{% endmethod %}
 
 ## Get Template
-{% method %}
 
-Returns a template given an ID. 
+Returns a template given an ID.
 
 Returns a 404 error if the specified template isn't found.
 
-{% sample lang="http" %}
 ```http
 GET /api/templates/1?api_key=12345678901234567890123456789012
 ```
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The template ID      |
 
-```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+| `id` | `int64` | **Required**. The template ID |
+
+```text
 {
   "id" : 1,
   "name" : "Password Reset Template",
@@ -83,10 +80,8 @@ GET /api/templates/1?api_key=12345678901234567890123456789012
   "attachments" : [],
 }
 ```
-{% endmethod %}
 
 ## Create Template
-{% method %}
 
 Creates a template.
 
@@ -98,17 +93,17 @@ To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The
 
 This method returns the JSON representation of the template that was created.
 
-{% sample lang="http" %}
 ```http
 GET /api/templates/?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The template name.|
+| `name` | `int64` | **Required, Unique**. The template name. |
 | `text` or `html` | string | **Required** The template text or HTML |
 
-```
+```text
 {
   "id" : 1,
   "name" : "Password Reset Template",
@@ -119,10 +114,8 @@ GET /api/templates/?api_key=12345678901234567890123456789012
   "attachments" : [],
 }
 ```
-{% endmethod %}
 
 ## Modify Template
-{% method %}
 
 Modifies an existing template.
 
@@ -130,17 +123,17 @@ This method expects the template to be provided in JSON format. You must provide
 
 This method returns the JSON representation of the template that was modified.
 
-{% sample lang="http" %}
 ```http
 PUT /api/templates/1?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `name`      | `int64`  | **Required, Unique**. The template name.|
+| `name` | `int64` | **Required, Unique**. The template name. |
 | `text` or `html` | string | **Required** The template text or HTML |
 
-```
+```text
 {
   "id" : 1,
   "name" : "Password Reset Template",
@@ -151,55 +144,53 @@ PUT /api/templates/1?api_key=12345678901234567890123456789012
   "attachments" : [],
 }
 ```
-{% endmethod %}
 
 ## Delete Template
-{% method %}
 
-Deletes a template by ID. 
+Deletes a template by ID.
 
 Returns a 404 error if the specified template isn't found.
 
 This method returns a status message indicating the template was deleted successfully.
 
-{% sample lang="http" %}
 ```http
 DELETE /api/templates/1?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
-| `id`      | `int64`  | **Required**. The template ID      |
+| `id` | `int64` | **Required**. The template ID |
 
 ### Response
-```
+
+```text
 {
   "message": "Template deleted successfully!",
   "success": true,
   "data": null
 }
 ```
-{% endmethod %}
 
 ## Import Template
-{% method %}
+
 Gophish provides the ability to import an email as a template. This makes it easy to weaponize legitimate emails for your phishing assessments.
 
 This endpoint expects the raw email content. By setting the `convert_links` attribute to `true`, Gophish will automatically change all the links in the email to `{{.URL}}`.
 
-{% sample lang="http" %}
 ```http
 POST /api/import/email?api_key=12345678901234567890123456789012
 ```
+
 | Parameter | Type | Description |
-| --------- | ---- | ----------- |
+| :--- | :--- | :--- |
 | `api_key` | `string` | **Required**. Your Gophish API key |
 | `content` | string | **Required** The raw email content |
-| `convert_links` | bool | **Required** (default: false) Convert email links to point to Gophish |
+| `convert_links` | bool | **Required** \(default: false\) Convert email links to point to Gophish |
 
 ### Request
 
-```
+```text
 {
   "content" : "raw email content",
   "convert_links" : true
@@ -207,11 +198,12 @@ POST /api/import/email?api_key=12345678901234567890123456789012
 ```
 
 ### Response
-```
+
+```text
 {
   "text": "Email text",
   "html": "Email HTML",
   "subject": "Email subject"
 }
 ```
-{% endmethod %}
+

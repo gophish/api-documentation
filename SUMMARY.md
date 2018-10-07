@@ -1,9 +1,9 @@
-# Summary
+# Table of contents
 
 * [Introduction](README.md)
-* [Settings](settings/README.md)
-* [Sending Profiles](sending_profiles/README.md)
-* [Templates](templates/README.md)
-* [Landing Pages](landing_pages/README.md)
-* [Campaigns](campaigns/README.md)
+* [Settings](settings.md)
+* [Sending Profiles](sending-profiles.md)
+* [Templates](templates.md)
+* [Landing Pages](landing-pages.md)
+* [Campaigns](campaigns.md)
 
