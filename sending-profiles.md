@@ -17,22 +17,35 @@ Sending Profiles have the following structure:
   from_address       : string
   ignore_cert_errors : boolean (default:false)
   modified_date      : string(datetime)
+  headers            : array({key: string, value: string}) (optional)
 }
 ```
 
-## Get Sending Profiles
+{% api-method method="get" host="https://localhost" path="/api/smtp/" %}
+{% api-method-summary %}
+Get Sending Profiles
+{% endapi-method-summary %}
 
-Returns a list of sending profiles.
+{% api-method-description %}
+Gets a list of the sending profiles created by the authenticated user.
+{% endapi-method-description %}
 
-```http
-GET /api/smtp/?api_key=12345678901234567890123456789012
-```
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+A list of the sending profiles created by the authenticated user.
+{% endapi-method-response-example-description %}
 
-```text
+```javascript
 [
   {
     "id" : 1,
@@ -43,27 +56,52 @@ GET /api/smtp/?api_key=12345678901234567890123456789012
     "username":"",
     "password":"",
     "ignore_cert_errors":true,
-    "modified_date": "2016-11-20T14:47:51.4131367-06:00"
+    "modified_date": "2016-11-20T14:47:51.4131367-06:00",
+    "headers": [
+      {
+        "key": "X-Header",
+        "value": "Foo Bar"
+      }
+    ]
   }
 ]
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-## Get Sending Profile
+{% api-method method="get" host="https://localhost:3333" path="/api/smtp/:id" %}
+{% api-method-summary %}
+Get Sending Profile
+{% endapi-method-summary %}
 
-Returns a sending profile given an ID.
+{% api-method-description %}
+Returns a sending profile given an ID, returning a 404 error if no sending profile with the provided ID is found.
+{% endapi-method-description %}
 
-Returns a 404 error if the specified sending profile isn't found.
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The sending profile ID to return
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
 
-```http
-GET /api/smtp/1?api_key=12345678901234567890123456789012
-```
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The sending profile ID |
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-```text
+{% endapi-method-response-example-description %}
+
+```javascript
 {
   "id" : 1,
   "name":"Example Profile",
@@ -73,65 +111,73 @@ GET /api/smtp/1?api_key=12345678901234567890123456789012
   "username":"",
   "password":"",
   "ignore_cert_errors":true,
-  "modified_date": "2016-11-20T14:47:51.4131367-06:00"
+  "modified_date": "2016-11-20T14:47:51.4131367-06:00",
+  "headers": [
+    {
+      "key": "X-Header",
+      "value": "Foo Bar"
+    }
+  ]
 }
 ```
+{% endapi-method-response-example %}
 
-## Create Sending Profile
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
 
-Creates a sending profile.
+{% endapi-method-response-example-description %}
 
-This method expects the sending profile to be provided in JSON format. You must provide a sending profile `name`, the `from_address` which emails are sent from, and the SMTP relay `host`.
-
-Sending Profiles support authentication by setting the `username` and `password`.
-
-Additionally, many SMTP server deployments leverage self-signed certificates. To tell Gophish to ignore these invalid certificates, set the `ignore_cert_errors` to `true`.
-
-This method returns the JSON representation of the sending profile that was created.
-
-```http
-GET /api/smtp/?api_key=12345678901234567890123456789012
-```
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name` | `int64` | **Required, Unique**. The sending profile name. |
-| `from_address` | string | **Required** The address to send emails from |
-| `host` | string | **Required** The `host:port` of the SMTP relay to send emails through |
-
-```text
+```javascript
 {
-  "name":"Example Profile",
-  "interface_type":"SMTP",
-  "from_address":"John Doe <john@example.com>",
-  "host":"smtp.example.com:25",
-  "username":"",
-  "password":"",
-  "ignore_cert_errors":true
+  "message": "SMTP not found",
+  "success": false,
+  "data": null
 }
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-## Modify Sending Profile
+{% api-method method="post" host="https://localhost:3333" path="/api/smtp" %}
+{% api-method-summary %}
+Create Sending Profile
+{% endapi-method-summary %}
 
-Modifies an existing sending profile.
+{% api-method-description %}
+Creates a sending profile.  
+  
+This method expects the sending profile to be provided in JSON format. You must provide a sending profile `name`, the `from_address` which emails are sent from, and the SMTP relay `host`.  
+  
+Sending Profiles support authentication by setting the `username` and `password`.  
+  
+Additionally, many SMTP server deployments leverage self-signed certificates. To tell Gophish to ignore these invalid certificates, set the `ignore_cert_errors` to `true`.  
+  
+This method returns the JSON representation of the sending profile that was created.
+{% endapi-method-description %}
 
-This method expects the sending profile to be provided in JSON format. You must provide a full sending profile, not just the fields you want to update.
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
 
-This method returns the JSON representation of the sending profile that was modified.
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="object" required=true %}
+The body of the request is a JSON representation of a sending profile. Refer to the introduction for the valid format of a sending profile.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
 
-```http
-PUT /api/smtp/1?api_key=12345678901234567890123456789012
-```
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name` | `int64` | **Required, Unique**. The sending profile name. |
-| `from_address` | string | **Required** The address to send emails from |
-| `host` | string | **Required** The `host:port` of the SMTP relay to send emails through |
+{% endapi-method-response-example-description %}
 
-```text
+```javascript
 {
   "id" : 1,
   "name":"Example Profile",
@@ -140,34 +186,170 @@ PUT /api/smtp/1?api_key=12345678901234567890123456789012
   "host":"smtp.example.com:25",
   "username":"",
   "password":"",
-  "ignore_cert_errors":true
+  "ignore_cert_errors":true,
+  "modified_date": "2016-11-20T14:47:51.4131367-06:00",
+  "headers": [
+    {
+      "key": "X-Header",
+      "value": "Foo Bar"
+    }
+  ]
 }
 ```
+{% endapi-method-response-example %}
 
-## Delete Sending Profile
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+If required fields aren't provided, or if a sending profile already exists with the provided name, a 400: Bad Request error will be returned.
+{% endapi-method-response-example-description %}
 
-Deletes a sending profile by ID.
-
-Returns a 404 error if the specified sending profile isn't found.
-
-This method returns a status message indicating the sending profile was deleted successfully.
-
-```http
-DELETE /api/smtp/1?api_key=12345678901234567890123456789012
+```javascript
+{
+  "message": "Error message indicating the issue",
+  "success": false,
+  "data": null
+}
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The sending profile ID |
+{% api-method method="put" host="https://localhost:3333" path="/api/smtp/:id" %}
+{% api-method-summary %}
+Modify Sending Profile
+{% endapi-method-summary %}
 
-### Response
+{% api-method-description %}
+Modified an existing sending profile.  
+  
+This method expects the sending profile to be provided in JSON format. **You must provide a full sending profile, not just the fields you want to update.**  
+  
+This method returns the JSON representation of the sending profile that was modified.
+{% endapi-method-description %}
 
-```text
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The sending profile ID to modify
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="string" required=true %}
+The body of the request is a JSON representation of a sending profile. Refer to the introduction for the valid format of a sending profile.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "id" : 1,
+  "name":"Example Profile",
+  "interface_type":"SMTP",
+  "from_address":"John Doe <john@example.com>",
+  "host":"smtp.example.com:25",
+  "username":"",
+  "password":"",
+  "ignore_cert_errors":true,
+  "modified_date": "2016-11-20T14:47:51.4131367-06:00",
+  "headers": [
+    {
+      "key": "X-Header",
+      "value": "Foo Bar"
+    }
+  ]
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+If no sending profile exists with the provided ID, a 404: Not Found error is returned.
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "SMTP not found",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="delete" host="https://localhost:3333" path="/api/smtp/:id" %}
+{% api-method-summary %}
+Delete Sending Profile
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Deletes a sending profile by ID.  
+  
+Returns a 404 error if the specified sending profile isn't found.  
+  
+This method returns a status message indicating the sending profile was deleted successfully.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The ID of the sending profile to delete
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
 {
   "message": "SMTP deleted successfully!",
   "success": true,
   "data": null
 }
 ```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "SMTP not found",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
