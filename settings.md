@@ -1,3 +1,7 @@
+---
+description: These endpoints allow you to modify various Gophish settings.
+---
+
 # Settings
 
 {% api-method method="post" host="https://localhost:3333" path="/api/reset" %}

@@ -22,25 +22,37 @@ Templates support sending attachments. Attachments have the following structure:
 
 ```text
   content: string
-  type   : string`
-  name   : string`
+  type   : string
+  name   : string
 ```
 
 > Note: The `content` field in an attachment is expected to be base64 encoded.
 
-## Get Templates
+{% api-method method="get" host="https://localhost:3333" path="/api/templates" %}
+{% api-method-summary %}
+Get Templates
+{% endapi-method-summary %}
 
+{% api-method-description %}
 Returns a list of templates.
+{% endapi-method-description %}
 
-```http
-GET /api/templates/?api_key=12345678901234567890123456789012
-```
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-```text
+{% endapi-method-response-example-description %}
+
+```javascript
 [
   {
     "id" : 1,
@@ -53,37 +65,132 @@ GET /api/templates/?api_key=12345678901234567890123456789012
   }
 ]
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-## Get Template
+{% api-method method="get" host="https://localhost:3333" path="/api/templates/:id" %}
+{% api-method-summary %}
+Get Template
+{% endapi-method-summary %}
 
-Returns a template given an ID.
+{% api-method-description %}
+Returns a template with the provided ID.  
+  
+Returns a 404: Not Found error if the specified template doesn't exist.
+{% endapi-method-description %}
 
-Returns a 404 error if the specified template isn't found.
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The template ID
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
 
-```http
-GET /api/templates/1?api_key=12345678901234567890123456789012
-```
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The template ID |
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-```text
+{% endapi-method-response-example-description %}
+
+```javascript
 {
-  "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
+    "id" : 1,
+    "name" : "Password Reset Template",
+    "subject" : "{{.FirstName}}, please reset your password.",
+    "text" : "Please reset your password here: {{.URL}}",
+    "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+    "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+    "attachments" : [],
 }
 ```
+{% endapi-method-response-example %}
 
-## Create Template
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
 
-Creates a template.
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "Template not found",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="https://localhost:3333" path="/api/templates" %}
+{% api-method-summary %}
+Create Template
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Creates a new template from the provided JSON request body.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="object" required=true %}
+The request body should be a JSON representation of a template. See the schema at the top of this page for the template format.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+    "id" : 1,
+    "name" : "Password Reset Template",
+    "subject" : "{{.FirstName}}, please reset your password.",
+    "text" : "Please reset your password here: {{.URL}}",
+    "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
+    "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
+    "attachments" : [],
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+At least one text or HTML field must be specified, otherwise a 400: Bad Request error is returned
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "Need to specify at least plaintext or HTML content",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
 This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
 
@@ -93,117 +200,170 @@ To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The
 
 This method returns the JSON representation of the template that was created.
 
-```http
-GET /api/templates/?api_key=12345678901234567890123456789012
-```
+{% api-method method="put" host="https://localhost:3333" path="/api/templates/:id" %}
+{% api-method-summary %}
+Modify Template
+{% endapi-method-summary %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name` | `int64` | **Required, Unique**. The template name. |
-| `text` or `html` | string | **Required** The template text or HTML |
-
-```text
-{
-  "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
-}
-```
-
-## Modify Template
-
+{% api-method-description %}
 Modifies an existing template.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The template ID to modify
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="object" required=true %}
+The JSON representation of the template you wish to modify. The entire template must be provided, not just the fields you wish to update.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
 This method expects the template to be provided in JSON format. You must provide a full template, not just the fields you want to update.
 
 This method returns the JSON representation of the template that was modified.
 
-```http
-PUT /api/templates/1?api_key=12345678901234567890123456789012
-```
+{% api-method method="delete" host="https://localhost:3333" path="/api/templates/:id" %}
+{% api-method-summary %}
+Delete Template
+{% endapi-method-summary %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name` | `int64` | **Required, Unique**. The template name. |
-| `text` or `html` | string | **Required** The template text or HTML |
-
-```text
-{
-  "id" : 1,
-  "name" : "Password Reset Template",
-  "subject" : "{{.FirstName}}, please reset your password.",
-  "text" : "Please reset your password here: {{.URL}}",
-  "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
-  "modified_date" : "2016-11-21T18:30:11.1477736-06:00",
-  "attachments" : [],
-}
-```
-
-## Delete Template
-
+{% api-method-description %}
 Deletes a template by ID.
+{% endapi-method-description %}
 
-Returns a 404 error if the specified template isn't found.
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="" type="string" required=false %}
 
-This method returns a status message indicating the template was deleted successfully.
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+{% endapi-method-request %}
 
-```http
-DELETE /api/templates/1?api_key=12345678901234567890123456789012
-```
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The template ID |
+{% endapi-method-response-example-description %}
 
-### Response
-
-```text
+```javascript
 {
   "message": "Template deleted successfully!",
   "success": true,
   "data": null
 }
 ```
+{% endapi-method-response-example %}
 
-## Import Template
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+If no template is found with the provided ID, a 404: Not Found error is returned
+{% endapi-method-response-example-description %}
 
-Gophish provides the ability to import an email as a template. This makes it easy to weaponize legitimate emails for your phishing assessments.
-
-This endpoint expects the raw email content. By setting the `convert_links` attribute to `true`, Gophish will automatically change all the links in the email to `{{.URL}}`.
-
-```http
-POST /api/import/email?api_key=12345678901234567890123456789012
-```
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `content` | string | **Required** The raw email content |
-| `convert_links` | bool | **Required** \(default: false\) Convert email links to point to Gophish |
-
-### Request
-
-```text
+```javascript
 {
-  "content" : "raw email content",
-  "convert_links" : true
+  "message": "Template not found",
+  "success": false,
+  "data": null
 }
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-### Response
+Returns a 404 error if the specified template isn't found.
 
-```text
+This method returns a status message indicating the template was deleted successfully.
+
+{% api-method method="post" host="https://localhost:3333" path="/api/import/email" %}
+{% api-method-summary %}
+Import Template
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Imports an email as a template.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="convert\_links" type="boolean" required=true %}
+Whether or not to convert the links within the email to {{.URL}} automatically.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="content" type="string" required=true %}
+The original email content in RFC 2045 format, including the original headers.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
 {
   "text": "Email text",
   "html": "Email HTML",
   "subject": "Email subject"
 }
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+ Gophish provides the ability to parse an existing email to be used as a template. This makes it easy to repurpose legitimate emails for your phishing assessments.
+
+This endpoint expects the raw email content in [RFC 2045 format](https://www.ietf.org/rfc/rfc2045.txt), including the original headers. Usually, this is found using the "Show Original" feature of email clients.
+
+The request body for this endpoint is a JSON request in the form of:
+
+```javascript
+{
+    content:       string
+    convert_links: boolean
+}
+```
+
+By setting the `convert_links` attribute to `true`, Gophish will automatically change all the links in the email to `{{.URL}}`.
+
+{% hint style="info" %}
+**Note:** This method doesn't fully import the email as a template. Instead, it parses the email, returning a response that can be used with the "[Create Template](templates.md#create-template)" endpoint.
+{% endhint %}
 
