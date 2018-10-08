@@ -202,6 +202,12 @@ The ID of the landing page to modify
 A valid API key
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="object" required=true %}
+The JSON representation of the landing page to be modified
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -210,63 +216,99 @@ A valid API key
 
 {% endapi-method-response-example-description %}
 
+```javascript
+{
+   "id": 1,
+   "name": "Example Page",
+   "html": "<html><head></head><body>This is a test page</body></html>",
+   "capture_credentials": true,
+   "capture_passwords": true,
+   "redirect_url": "http://example.com",
+   "modified_date": "2016-11-26T14:04:40.4130048-06:00"
+}
 ```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "Page not found",
+  "success": false,
+  "data": null
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
+Returns a 404 error if the specified landing page isn't found.
+
 This method expects the landing page to be provided in JSON format. You must provide a full landing page, not just the fields you want to update.
 
 This method returns the JSON representation of the landing page that was modified.
 
-```http
-PUT /api/pages/1?api_key=12345678901234567890123456789012
-```
+{% api-method method="delete" host="https://localhost:3333" path="/api/pages/:id" %}
+{% api-method-summary %}
+Delete Landing Page
+{% endapi-method-summary %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The landing page ID |
-| `name` | `int64` | **Required, Unique**. The landing page name. |
-| `html` | string | **Required** The landing page HTML |
+{% api-method-description %}
+Deletes a landing page.
+{% endapi-method-description %}
 
-```text
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The ID of the landing page to delete
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
 {
-  "name": "Example Page",
-  "html": "<html><head></head><body>This is a test page</body></html>",
-  "capture_credentials": true,
-  "capture_passwords": true,
-  "redirect_url": "http://example.com"
-}
-```
-
-## Delete Landing Page
-
-Deletes a landing page by ID.
-
-Returns a 404 error if the specified landing page isn't found.
-
-This method returns a status message indicating the landing page was deleted successfully.
-
-```http
-DELETE /api/landing pages/1?api_key=12345678901234567890123456789012
-```
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The landing page ID |
-
-### Response
-
-```text
-{
-  "message": "Page deleted successfully!",
+  "message": "Page Deleted Successfully",
   "success": true,
   "data": null
 }
 ```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "Page not found",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+Returns a 404 error if the specified landing page isn't found.
+
+This method returns a status message indicating the landing page was deleted successfully.
 
