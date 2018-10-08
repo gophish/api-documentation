@@ -331,7 +331,7 @@ A valid API key
 
 {% api-method-body-parameters %}
 {% api-method-parameter name="include\_resources" type="boolean" required=false %}
-Whether or not to create a `base` tag in the resulting HTML to resolve static references \(recommended: `false`\)
+Whether or not to create a `<base>` tag in the resulting HTML to resolve static references \(recommended: `false`\)
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="url" type="string" required=true %}
@@ -346,11 +346,23 @@ The URL to fetch
 
 {% endapi-method-response-example-description %}
 
-```
-
+```javascript
+{
+    "html": "<html><head>..."
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+This endpoint simply fetches and returns the HTML from a provided URL. If `include_resources` is `false` \(recommended\), a `<base>` tag is added so that relative links in the HTML resolve from the original URL.
+
+Additionally, if the HTML contains form elements, this endpoint adds another input, `__original_url`, that points to the original URL. This makes it possible to replay captured credentials later.
+
+{% hint style="info" %}
+**Note:** This API endpoint doesn't actually create a new landing page. Instead, you can use the HTML returned from this endpoint as an input to the [Create Landing Page](landing-pages.md#create-landing-page) method.
+{% endhint %}
+
+
 
