@@ -312,3 +312,45 @@ Returns a 404 error if the specified landing page isn't found.
 
 This method returns a status message indicating the landing page was deleted successfully.
 
+{% api-method method="post" host="https://localhost:3333" path="/api/import/site" %}
+{% api-method-summary %}
+Import Site
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Fetches a URL to be later imported as a landing page
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="include\_resources" type="boolean" required=false %}
+Whether or not to create a `base` tag in the resulting HTML to resolve static references \(recommended: `false`\)
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="url" type="string" required=true %}
+The URL to fetch
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
