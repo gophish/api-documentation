@@ -16,21 +16,33 @@ Landing pages have the following structure:
 }
 ```
 
-## Get Landing Pages
+{% api-method method="get" host="https://localhost:3333" path="/api/pages/" %}
+{% api-method-summary %}
+Get Landing Pages
+{% endapi-method-summary %}
 
+{% api-method-description %}
 Returns a list of landing pages.
+{% endapi-method-description %}
 
-```http
-GET /api/pages/?api_key=12345678901234567890123456789012
-```
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
 
-```text
-[
-  {
+{% endapi-method-response-example-description %}
+
+```javascript
+[  
+ {
     "id": 1,
     "name": "Example Page",
     "html": "<html><head></head><body>This is a test page</body></html>",
@@ -41,37 +53,118 @@ GET /api/pages/?api_key=12345678901234567890123456789012
   }
 ]
 ```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
-## Get Landing Page
+{% api-method method="get" host="https://localhost:3333" path="/api/pages/:id" %}
+{% api-method-summary %}
+Get Landing Page
+{% endapi-method-summary %}
 
+{% api-method-description %}
 Returns a landing page given an ID.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The landing page ID
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+   "id": 1,
+   "name": "Example Page",
+   "html": "<html><head></head><body>This is a test page</body></html>",
+   "capture_credentials": true,
+   "capture_passwords": true,
+   "redirect_url": "http://example.com",
+   "modified_date": "2016-11-26T14:04:40.4130048-06:00"
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=404 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "message": "Page not found",
+  "success": false,
+  "data": null
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
 Returns a 404 error if the specified landing page isn't found.
 
-```http
-GET /api/pages/1?api_key=12345678901234567890123456789012
-```
+{% api-method method="get" host="https://localhost:3333" path="/api/pages/" %}
+{% api-method-summary %}
+Create Landing Page
+{% endapi-method-summary %}
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `id` | `int64` | **Required**. The landing page ID |
+{% api-method-description %}
+Creates a landing page.
+{% endapi-method-description %}
 
-```text
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="Payload" type="object" required=true %}
+The JSON representation of the landing page to be created
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
 {
-  "id": 1,
-  "name": "Example Page",
-  "html": "<html><head></head><body>This is a test page</body></html>",
-  "capture_credentials": true,
-  "capture_passwords": true,
-  "redirect_url": "http://example.com",
-  "modified_date": "2016-11-26T14:04:40.4130048-06:00"
+   "id": 1,
+   "name": "Example Page",
+   "html": "<html><head></head><body>This is a test page</body></html>",
+   "capture_credentials": true,
+   "capture_passwords": true,
+   "redirect_url": "http://example.com",
+   "modified_date": "2016-11-26T14:04:40.4130048-06:00"
 }
 ```
-
-## Create landing page
-
-Creates a landing page.
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
 This method expects the landing page to be provided in JSON format. You must provide a landing page `name` and the `html` for the landing page.
 
@@ -87,31 +180,43 @@ By default, Gophish will not capture passwords, as they are stored in plaintext.
 
 Gophish also provides the ability to redirect users to a URL after they submit credentials. This is controlled by setting the `redirect_url` attribute.
 
-This method returns the JSON representation of the landing page that was created.
+{% api-method method="put" host="https://localhost:3333" path="/api/pages/:id" %}
+{% api-method-summary %}
+Modify Landing Page
+{% endapi-method-summary %}
 
-```http
-GET /api/pages/?api_key=12345678901234567890123456789012
-```
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
-| `name` | `int64` | **Required, Unique**. The landing page name. |
-| `html` | string | **Required** The landing page HTML |
-
-```text
-{
-  "name": "Example Page",
-  "html": "<html><head></head><body>This is a test page</body></html>",
-  "capture_credentials": true,
-  "capture_passwords": true,
-  "redirect_url": "http://example.com"
-}
-```
-
-## Modify Landing Page
-
+{% api-method-description %}
 Modifies an existing landing page.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="id" type="integer" required=true %}
+The ID of the landing page to modify
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+A valid API key
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
 This method expects the landing page to be provided in JSON format. You must provide a full landing page, not just the fields you want to update.
 
