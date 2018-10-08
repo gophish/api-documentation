@@ -145,15 +145,7 @@ Create Sending Profile
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Creates a sending profile.  
-  
-This method expects the sending profile to be provided in JSON format. You must provide a sending profile `name`, the `from_address` which emails are sent from, and the SMTP relay `host`.  
-  
-Sending Profiles support authentication by setting the `username` and `password`.  
-  
-Additionally, many SMTP server deployments leverage self-signed certificates. To tell Gophish to ignore these invalid certificates, set the `ignore_cert_errors` to `true`.  
-  
-This method returns the JSON representation of the sending profile that was created.
+Creates a sending profile.
 {% endapi-method-description %}
 
 {% api-method-spec %}
@@ -215,17 +207,21 @@ If required fields aren't provided, or if a sending profile already exists with 
 {% endapi-method-spec %}
 {% endapi-method %}
 
+This method expects the sending profile to be provided in JSON format. You must provide a sending profile `name`, the `from_address` which emails are sent from, and the SMTP relay `host`.
+
+Sending Profiles support authentication by setting the `username` and `password`.
+
+Additionally, many SMTP server deployments leverage self-signed certificates. To tell Gophish to ignore these invalid certificates, set the `ignore_cert_errors` field to `true`.
+
+This method returns the JSON representation of the sending profile that was created.
+
 {% api-method method="put" host="https://localhost:3333" path="/api/smtp/:id" %}
 {% api-method-summary %}
 Modify Sending Profile
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Modified an existing sending profile.  
-  
-This method expects the sending profile to be provided in JSON format. **You must provide a full sending profile, not just the fields you want to update.**  
-  
-This method returns the JSON representation of the sending profile that was modified.
+Modifies an existing sending profile.
 {% endapi-method-description %}
 
 {% api-method-spec %}
@@ -243,7 +239,7 @@ A valid API key
 {% endapi-method-headers %}
 
 {% api-method-body-parameters %}
-{% api-method-parameter name="Payload" type="string" required=true %}
+{% api-method-parameter name="Payload" type="object" required=true %}
 The body of the request is a JSON representation of a sending profile. Refer to the introduction for the valid format of a sending profile.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
@@ -293,17 +289,17 @@ If no sending profile exists with the provided ID, a 404: Not Found error is ret
 {% endapi-method-spec %}
 {% endapi-method %}
 
+This method expects the sending profile to be provided in JSON format. You must provide a full sending profile, not just the fields you want to update.
+
+This method returns the JSON representation of the sending profile that was modified.
+
 {% api-method method="delete" host="https://localhost:3333" path="/api/smtp/:id" %}
 {% api-method-summary %}
 Delete Sending Profile
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Deletes a sending profile by ID.  
-  
-Returns a 404 error if the specified sending profile isn't found.  
-  
-This method returns a status message indicating the sending profile was deleted successfully.
+Deletes a sending profile by ID.
 {% endapi-method-description %}
 
 {% api-method-spec %}
@@ -352,4 +348,8 @@ A valid API key
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+Returns a 404 error if the specified sending profile isn't found.
+
+This method returns a status message indicating the sending profile was deleted successfully.
 
