@@ -120,7 +120,7 @@ A valid API key
 
 Returns a 404 error if the specified landing page isn't found.
 
-{% api-method method="get" host="https://localhost:3333" path="/api/pages/" %}
+{% api-method method="post" host="https://localhost:3333" path="/api/pages/" %}
 {% api-method-summary %}
 Create Landing Page
 {% endapi-method-summary %}
@@ -145,7 +145,7 @@ The JSON representation of the landing page to be created
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=200 %}
+{% api-method-response-example httpCode=201 %}
 {% api-method-response-example-description %}
 
 {% endapi-method-response-example-description %}
