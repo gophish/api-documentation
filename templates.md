@@ -194,7 +194,13 @@ At least one text or HTML field must be specified, otherwise a 400: Bad Request 
 
 This method expects the template to be provided in JSON format. You must provide a template `name` and the `text` and/or `html` for the template.
 
-> Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a template.
+{% hint style="info" %}
+**Importing an Existing Email** 
+
+What better way to make pixel-perfect emails than by importing an existing email you already have in your inbox?
+
+Using the [Import Email](templates.md#import-template) endpoint, you can take a raw email and parse it as a valid Gophish template.
+{% endhint %}
 
 To add tracking, make sure you specify a `{{.Tracker}}` in the `html` field. The UI adds this automatically, but it needs to be specified if you're using the API.
 

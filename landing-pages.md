@@ -168,7 +168,11 @@ The JSON representation of the landing page to be created
 
 This method expects the landing page to be provided in JSON format. You must provide a landing page `name` and the `html` for the landing page.
 
-> Note: The `modified_date` field is updated automatically. It is not required to set this when creating or modifying a landing page.
+{% hint style="info" %}
+**Importing a Site**
+
+Let Gophish do the hard work for you by importing a site. By using the [Import Site](landing-pages.md#import-site) endpoint, you can simply give Gophish a URL and have the site fetched for you and returned in a format that can be used with this method.
+{% endhint %}
 
 #### Capturing Credentials
 
