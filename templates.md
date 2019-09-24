@@ -132,7 +132,7 @@ A valid API key
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://localhost:3333" path="/api/templates" %}
+{% api-method method="post" host="https://localhost:3333" path="/api/templates/" %}
 {% api-method-summary %}
 Create Template
 {% endapi-method-summary %}
