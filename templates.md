@@ -10,6 +10,7 @@ Templates have the following structure:
 {
   id            : int64
   name          : string
+  description   : string
   subject       : string
   text          : string
   html          : string
@@ -57,6 +58,7 @@ A valid API key
   {
     "id" : 1,
     "name" : "Password Reset Template",
+    "description" : "Mail template instructing its recipients to follow a password reset link",
     "subject" : "{{.FirstName}}, please reset your password.",
     "text" : "Please reset your password here: {{.URL}}",
     "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
@@ -106,6 +108,7 @@ A valid API key
 {
     "id" : 1,
     "name" : "Password Reset Template",
+    "description" : "Mail template instructing its recipients to follow a password reset link",
     "subject" : "{{.FirstName}}, please reset your password.",
     "text" : "Please reset your password here: {{.URL}}",
     "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",
@@ -166,6 +169,7 @@ The request body should be a JSON representation of a template. See the schema a
 {
     "id" : 1,
     "name" : "Password Reset Template",
+    "description" : "Mail template instructing its recipients to follow a password reset link",
     "subject" : "{{.FirstName}}, please reset your password.",
     "text" : "Please reset your password here: {{.URL}}",
     "html" : "<html><head></head><body>Please reset your password <a href\"{{.URL}}\">here</a></body></html>",

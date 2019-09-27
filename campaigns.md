@@ -6,6 +6,7 @@ Campaigns have the following structure:
 {
   id                  : int64
   name                : string
+  description         : string
   created_date        : string(datetime)
   launch_date         : string(datetime)
   send_by_date        : string(datetime)
@@ -93,6 +94,7 @@ A valid API key
   {
     "id": 1,
     "name": "Example Campaign",
+    "description": "Description of example campaign",
     "created_date": "2018-10-08T15:56:29.48815Z",
     "launch_date": "2018-10-08T15:56:00Z",
     "send_by_date": "0001-01-01T00:00:00Z",
@@ -231,6 +233,7 @@ A valid API key
 {
   "id": 1,
   "name": "Example Campaign",
+  "description": "Description of example campaign",
   "created_date": "2018-10-08T15:56:29.48815Z",
   "launch_date": "2018-10-08T15:56:00Z",
   "send_by_date": "0001-01-01T00:00:00Z",
@@ -384,6 +387,7 @@ The campaign details. See the introduction above for the format of a campaign.
 {
   "id": 1,
   "name": "Example Campaign",
+  "description": "Description of example campaign",
   "created_date": "2018-10-08T15:56:29.48815Z",
   "launch_date": "2018-10-08T15:56:00Z",
   "send_by_date": "0001-01-01T00:00:00Z",
@@ -461,6 +465,7 @@ This method expects the campaign to be provided in JSON format. For the various 
 ```javascript
 {
     "name":"CC Example Campaign",
+    "description": "Description of example campaign",
     "template":{"name":"Example Template"},
     "url":"http://localhost",
     "page":{"name":"Example Landing Page"},
@@ -515,6 +520,7 @@ A valid API key
 {
   "id": 1,
   "name": "Example Campaign",
+  "description": "Description of example campaign",
   "status": "In progress",
   "results": [
     {

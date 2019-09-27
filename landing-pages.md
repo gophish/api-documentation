@@ -8,6 +8,7 @@ Landing pages have the following structure:
 {
   id                  : int64
   name                : string
+  description         : string
   html                : string
   capture_credentials : bool
   capture_passwords   : bool
@@ -45,6 +46,7 @@ A valid API key
  {
     "id": 1,
     "name": "Example Page",
+    "description": "Description of example landing page",
     "html": "<html><head></head><body>This is a test page</body></html>",
     "capture_credentials": true,
     "capture_passwords": true,
@@ -92,6 +94,7 @@ A valid API key
 {
    "id": 1,
    "name": "Example Page",
+   "description": "Description of example landing page",
    "html": "<html><head></head><body>This is a test page</body></html>",
    "capture_credentials": true,
    "capture_passwords": true,
@@ -154,6 +157,7 @@ The JSON representation of the landing page to be created
 {
    "id": 1,
    "name": "Example Page",
+   "description": "Description of example landing page",
    "html": "<html><head></head><body>This is a test page</body></html>",
    "capture_credentials": true,
    "capture_passwords": true,
@@ -224,6 +228,7 @@ The JSON representation of the landing page to be modified
 {
    "id": 1,
    "name": "Example Page",
+   "description": "Description of example landing page",
    "html": "<html><head></head><body>This is a test page</body></html>",
    "capture_credentials": true,
    "capture_passwords": true,
