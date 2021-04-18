@@ -1,4 +1,3 @@
-
 # User Management
 
 Gophish supports having multiple user accounts. Each of these accounts are separate, with their own campaigns, landing pages, templates, etc.
@@ -351,3 +350,4 @@ A valid API key
 {% endapi-method %}
 
 Returns a 404 error if no user is found with the provided ID.
+
