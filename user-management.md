@@ -178,10 +178,13 @@ The username for the account
 {
   "id": 2,
   "username": "exampleuser",
+  "api_key" : "user_api_key"
   "role": {
     "slug": "user",
     "name": "User",
     "description": "User role with edit access to objects and campaigns"
+    }
+  "password_change_required": false
 }
 ```
 {% endapi-method-response-example %}
